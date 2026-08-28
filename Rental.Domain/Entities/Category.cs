@@ -1,5 +1,6 @@
 ﻿using Rental.Domain.Validation;
 using System;
+using System.Collections.Generic;
 
 namespace Rental.Domain.Entities
 {
@@ -7,6 +8,7 @@ namespace Rental.Domain.Entities
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
+        public List<Product> Products { get; set; } = new List<Product>(); 
 
         public Category(string name)
         {
@@ -23,6 +25,17 @@ namespace Rental.Domain.Entities
         public void Update(string name)
         {
             ValidateName(name);
+        }
+
+        public void AddProduct(Product product)
+        {
+            DomainExceptionValidation.When(product == null, "O produto não pode ser nulo.");
+            Products.Add(product);
+        }
+
+        public void RemoveProduct(Product product)
+        {
+            Products.Remove(product);
         }
 
         private void ValidateName(string name)
