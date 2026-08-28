@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Rental.Domain.Entities
 {
-    public sealed class Product
+    public sealed class Product : BaseEntity
     {
-        public int Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public decimal Price { get; private set; } 
@@ -18,7 +17,7 @@ namespace Rental.Domain.Entities
         public bool Available { get; private set; } = true;
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         public Category Category { get; set; }
 
         public Product(string name, string description, decimal price, int quantity, string imageUrl)
@@ -27,18 +26,16 @@ namespace Rental.Domain.Entities
          
         }
 
-        public Product(int id, string name, string description, decimal price, int quantity, string imageUrl)
+        public Product(Guid id, string name, string description, decimal price, int quantity, string imageUrl)
         {
-            DomainExceptionValidation.When(id < 0, "O Id do produto não pode ser negativo.");
             Id = id;
             ValidateDomain(name, description, price, quantity, imageUrl);
 
         }
 
-        public void Update(string name, string description, decimal price, int quantity, string imageUrl, int categoryId)
+        public void Update(string name, string description, decimal price, int quantity, string imageUrl, Guid categoryId)
         {
-            ValidateDomain(name, description, price, quantity, imageUrl);
-            DomainExceptionValidation.When(categoryId < 0, "O Id da categoria não pode ser negativo.");
+            DomainExceptionValidation.When(categoryId == Guid.Empty, "O Id da categoria não pode ser vazio.");
             CategoryId = categoryId;
         }
 
@@ -49,7 +46,7 @@ namespace Rental.Domain.Entities
 
         public void ValidateDomain(string name, string description, decimal price, int quantity, string imageUrl)
         {
-           DomainExceptionValidation.When(string.IsNullOrEmpty(name),
+           DomainExceptionValidation.When(string.IsNullOrWhiteSpace(name),
                 "O nome do produto não pode ser nulo ou vazio.");
 
             DomainExceptionValidation.When(name.Length < 3,
@@ -58,7 +55,7 @@ namespace Rental.Domain.Entities
             DomainExceptionValidation.When(name.Length > 100,
                 "O nome do produto deve ter no máximo 100 caracteres.");
 
-            DomainExceptionValidation.When(string.IsNullOrEmpty(description),
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(description),
                 "A descrição do produto não pode ser nula ou vazia.");
 
             DomainExceptionValidation.When(description.Length < 10,
@@ -72,7 +69,7 @@ namespace Rental.Domain.Entities
 
             DomainExceptionValidation.When(quantity < 0,
                 "A quantidade do produto não pode ser negativa.");
-            DomainExceptionValidation.When(string.IsNullOrEmpty(imageUrl),
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(imageUrl),
 
                 "A URL da imagem do produto não pode ser nula ou vazia.");
 

@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace Rental.Domain.Entities
 {
-    public sealed class Category
+    public sealed class Category : BaseEntity
     {
-        public int Id { get; private set; }
         public string Name { get; private set; }
         public List<Product> Products { get; set; } = new List<Product>(); 
 
@@ -15,9 +14,8 @@ namespace Rental.Domain.Entities
             ValidateName(name);
         }
 
-        public Category(int id, string name)
-        {
-            DomainExceptionValidation.When(id < 0, "O Id da categoria não pode ser negativo.");
+        public Category(Guid id, string name)
+        {       
             Id = id;
             ValidateName(name);
         }
@@ -40,7 +38,7 @@ namespace Rental.Domain.Entities
 
         private void ValidateName(string name)
         {
-           DomainExceptionValidation.When(string.IsNullOrEmpty(name), 
+           DomainExceptionValidation.When(string.IsNullOrWhiteSpace(name), 
                "O nome da categoria não pode ser nulo ou vazio.");
 
             string trimmedName = name.Trim();
