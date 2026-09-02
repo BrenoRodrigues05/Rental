@@ -13,9 +13,9 @@ namespace Rental.Domain.Interfaces
         Task<IEnumerable<Product>> GetProductsByCategoryIdAsync(Guid categoryId);
         Task<IEnumerable<Product>> GetProductsByNameAsync(string name);
         Task<Product> GetProductByIdAsync(Guid id);
-        Task AddProductAsync(Product product);
-        Task UpdateProductAsync(Product product);
-        Task DeleteProductAsync(Guid id);
+        Task <Product> AddProductAsync(Product product);
+        Task <Product> UpdateProductAsync(Product product);
+        Task <Product> DeleteProductAsync(Guid id);
 
     }
 }
