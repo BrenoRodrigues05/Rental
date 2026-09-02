@@ -11,9 +11,9 @@ namespace Rental.Domain.Interfaces
     {
         Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<IEnumerable<Category>> GetCategoriesByNameAsync(string name);
-        Task<Category> GetCategoryByIdAsync(Guid id);
+        Task<Category?> GetCategoryByIdAsync(Guid id);
         Task <Category> AddCategoryAsync(Category category);
         Task <Category> UpdateCategoryAsync(Category category);
-        Task <Category> DeleteCategoryAsync(Guid id);
+        Task <Category?> DeleteCategoryAsync(Guid id);
     }
 }
