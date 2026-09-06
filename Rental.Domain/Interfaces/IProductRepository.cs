@@ -12,10 +12,10 @@ namespace Rental.Domain.Interfaces
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<IEnumerable<Product>> GetProductsByCategoryIdAsync(Guid categoryId);
         Task<IEnumerable<Product>> GetProductsByNameAsync(string name);
-        Task<Product> GetProductByIdAsync(Guid id);
+        Task<Product?> GetProductByIdAsync(Guid id);
         Task <Product> AddProductAsync(Product product);
         Task <Product> UpdateProductAsync(Product product);
-        Task <Product> DeleteProductAsync(Guid id);
+        Task <Product?> DeleteProductAsync(Guid id);
 
     }
 }
