@@ -40,10 +40,6 @@ namespace Rental.Application.Services
         public async Task<IEnumerable<CategoryDTO>> GetCategoriesByNameAsync(string name)
         {
             var categories = await _categoryRepository.GetCategoriesByNameAsync(name);
-            if(!categories.Any())
-            {
-                throw new KeyNotFoundException($"No categories found with name: {name}");
-            }
             return _mapper.Map<IEnumerable<CategoryDTO>>(categories);
         }
 
