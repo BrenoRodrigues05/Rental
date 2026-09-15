@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rental.Application.Interfaces;
+using Rental.Application.Services;
 using Rental.Domain.Interfaces;
 using Rental.Infra.Data.Context;
 using Rental.Infra.Data.Repositories;
@@ -18,6 +20,8 @@ namespace Rental.Infra.IoC
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<ICategoryService, CategoryService>();
 
             return services;
         }
