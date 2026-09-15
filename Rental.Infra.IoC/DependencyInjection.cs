@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rental.Application.Interfaces;
+using Rental.Application.Mappings;
 using Rental.Application.Services;
 using Rental.Domain.Interfaces;
 using Rental.Infra.Data.Context;
@@ -23,6 +24,8 @@ namespace Rental.Infra.IoC
 
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
+
+            services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
             return services;
         }
