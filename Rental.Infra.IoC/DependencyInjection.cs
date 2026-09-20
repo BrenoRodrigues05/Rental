@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rental.Application.Interfaces;
@@ -26,6 +27,9 @@ namespace Rental.Infra.IoC
             services.AddScoped<IProductService, ProductService>();
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
+
+            var handlers = AppDomain.CurrentDomain.Load("Rental.Application");
+            services.AddMediatR(handlers);
 
             return services;
         }
