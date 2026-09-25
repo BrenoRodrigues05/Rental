@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using Rental.Application.Mappings;
 using Rental.Application.Services;
 using Rental.Domain.Interfaces;
 using Rental.Infra.Data.Context;
+using Rental.Infra.Data.Identity;
 using Rental.Infra.Data.Repositories;
 
 namespace Rental.Infra.IoC
@@ -28,8 +30,8 @@ namespace Rental.Infra.IoC
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
-            var handlers = AppDomain.CurrentDomain.Load("Rental.Application");
-            services.AddMediatR(handlers);
+            services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssembly(AppDomain.CurrentDomain.Load("Rental.Application")));
 
             return services;
         }
