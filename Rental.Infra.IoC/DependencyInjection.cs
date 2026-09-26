@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Rental.Application.Interfaces;
 using Rental.Application.Mappings;
 using Rental.Application.Services;
+using Rental.Domain.Account;
 using Rental.Domain.Interfaces;
 using Rental.Infra.Data.Context;
 using Rental.Infra.Data.Identity;
@@ -28,10 +29,19 @@ namespace Rental.Infra.IoC
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
 
+            services.AddScoped<IAuthenticate, AuthenticateService>();
+            services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
+            services.ConfigureApplicationCookie(opt =>
+                        opt.AccessDeniedPath = "/Account/Login");
+
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssembly(AppDomain.CurrentDomain.Load("Rental.Application")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores
+                <ApplicationDbContext>().AddDefaultTokenProviders();
 
             return services;
         }
